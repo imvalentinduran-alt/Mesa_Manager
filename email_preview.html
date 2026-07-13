@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview — Email Mesa de Defensa UPEL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #CBD5E1;
+      padding: 48px 20px;
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    }
+
+    /* ── Card wrapper — 600px exactos para referencia Canva ── */
+    .email-card {
+      width: 600px;
+      margin: 0 auto 64px;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 48px rgba(15, 38, 69, 0.22);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, #00072d 0%, #1E3A5F 60%, #1a4080 100%);
+      padding: 44px 48px 48px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Dot grid pattern */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+
+    /* Decorative blurred circles */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%);
+      bottom: -120px;
+      right: -60px;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ── Logos row ── */
+    .logos-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 28px;
+    }
+
+    .logo-wrap img {
+      display: block;
+      object-fit: contain;
+    }
+
+    .logo-sip {
+      height: 130px;
+      width: auto;
+    }
+
+    .logo-upel {
+      height: 96px;
+      width: auto;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ── Hero text ── */
+    .hero-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title span {
+      color: rgba(255,255,255,0.45);
+      font-weight: 500;
+    }
+
+    /* Mesa type pill */
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      padding: 7px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-pill-dot {
+      width: 6px;
+      height: 6px;
+      background: #60A5FA;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       BODY
+    ───────────────────────────────────────────────────────── */
+    .body {
+      padding: 40px 48px 0;
+    }
+
+    .greeting-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1E3A5F;
+      margin-bottom: 8px;
+    }
+
+    .greeting-text {
+      font-size: 14px;
+      color: #64748B;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    /* ── Details card ── */
+    .details-card {
+      background: #F0F6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .details-title-wrap {
+      padding: 20px 24px 18px;
+      border-bottom: 1px solid #BFDBFE;
+    }
+
+    .details-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #2563EB;
+      margin-bottom: 8px;
+    }
+
+    .details-project-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1E3A5F;
+      line-height: 1.45;
+    }
+
+    .details-rows {
+      padding: 6px 24px 6px;
+    }
+
+    .details-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(191,219,254,0.6);
+    }
+
+    .details-row:last-child {
+      border-bottom: none;
+    }
+
+    .details-row-key {
+      font-size: 11px;
+      font-weight: 600;
+      color: #93C5FD;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .details-row-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1E3A5F;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       ROLE BLOCK
+    ───────────────────────────────────────────────────────── */
+    .role-block {
+      padding: 28px 48px 36px;
+    }
+
+    .role-inner {
+      background: linear-gradient(135deg, #00072d 0%, #1E3A5F 100%);
+      border-radius: 14px;
+      padding: 22px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle shimmer shape inside role block */
+    .role-inner::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+      top: -80px;
+      left: -40px;
+      border-radius: 50%;
+    }
+
+    .role-inner::after {
+      content: '';
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      bottom: -60px;
+      right: -20px;
+      border-radius: 50%;
+    }
+
+    .role-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .role-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────────────────── */
+    .footer {
+      background: #F8FAFF;
+      border-top: 1px solid #E2E8F0;
+      padding: 20px 48px;
+      border-radius: 0 0 24px 24px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 11px;
+      color: #94A3B8;
+      line-height: 1.7;
+    }
+
+    /* ── Preview label ── */
+    .preview-label {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 20px;
+    }
+
+    .preview-sep {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 56px 0 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     VERSIÓN ESTUDIANTE
+══════════════════════════════════════ -->
+<p class="preview-label">Preview · Versión estudiante · 600 × 800 px</p>
+
+<div class="email-card">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="logos-row">
+      <div class="logo-wrap">
+        <img src="recursos/icons/sipicon_white.png" class="logo-sip" alt="SIP">
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-wrap">
+        <img src="recursos/icons/logo_upel_white.png" class="logo-upel" alt="UPEL">
+      </div>
+    </div>
+
+    <p class="hero-eyebrow">Postgrado UPEL · Rubio</p>
+    <h1 class="hero-title">Mesa de Defensa <span>#1</span></h1>
+    <div class="hero-pill">
+      <span class="hero-pill-dot"></span>
+      Trabajo de Grado · 2026
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+    <p class="greeting-name">Hola, García María Valentina</p>
+    <p class="greeting-text">
+      Tu defensa de Trabajo de Grado fue programada exitosamente.
+      A continuación encontrarás todos los detalles del acto.
+    </p>
+
+    <div class="details-card">
+      <div class="details-title-wrap">
+        <p class="details-label">Título del Proyecto</p>
+        <p class="details-project-title">
+          Implementación de un sistema de gestión de mesas de defensa
+          para el Postgrado UPEL Rubio basado en tecnologías web modernas
+        </p>
+      </div>
+      <div class="details-rows">
+        <div class="details-row">
+          <span class="details-row-key">Estudiante</span>
+          <span class="details-row-val">García, María Valentina</span>
+        </div>
+        <div class="details-row">
+          <span class="details-row-key">Fecha</span>
+          <span class="details-row-val">Miércoles, 25/06/2026</span>
+        </div>
+        <div class="details-row">
+          <span class="details-row-key">Horario</span>
+          <span class="details-row-val">08:00 — 09:00</span>
+        </div>
+        <div class="details-row">
+          <span class="details-row-key">Aula</span>
+          <span class="details-row-val">Aula 3 — Edificio Postgrado, Piso 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLE BLOCK -->
+  <div class="role-block">
+    <div class="role-inner">
+      <p class="role-eyebrow">Tu participación en este acto</p>
+      <p class="role-name">Defensor</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>
+      Este mensaje fue generado automáticamente por <strong>UPEL Mesa Manager</strong>.<br>
+      Por favor no respondas a este correo.
+    </p>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VERSIÓN COMITÉ
+══════════════════════════════════════ -->
+<p class="preview-sep">Preview · Versión comité (Tutor Principal) · 600 × 800 px</p>
+
+<div class="email-card">
+
+  <div class="hero">
+    <div class="logos-row">
+      <div class="logo-wrap">
+        <img src="recursos/icons/sipicon_white.png" class="logo-sip" alt="SIP">
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-wrap">
+        <img src="recursos/icons/logo_upel_white.png" class="logo-upel" alt="UPEL">
+      </div>
+    </div>
+
+    <p class="hero-eyebrow">Postgrado UPEL · Rubio</p>
+    <h1 class="hero-title">Mesa de Defensa <span>#1</span></h1>
+    <div class="hero-pill">
+      <span class="hero-pill-dot"></span>
+      Trabajo de Grado · 2026
+    </div>
+  </div>
+
+  <div class="body">
+    <p class="greeting-name">Hola, Pérez Juan Carlos</p>
+    <p class="greeting-text">
+      Has sido designado como parte del Comité Evaluador para la
+      defensa de Trabajo de Grado que se detalla a continuación.
+    </p>
+
+    <div class="details-card">
+      <div class="details-title-wrap">
+        <p class="details-label">Título del Proyecto</p>
+        <p class="details-project-title">
+          Implementación de un sistema de gestión de mesas de defensa
+          para el Postgrado UPEL Rubio basado en tecnologías web modernas
+        </p>
+      </div>
+      <div class="details-rows">
+        <div class="details-row">
+          <span class="details-row-key">Estudiante</span>
+          <span class="details-row-val">García, María Valentina</span>
+        </div>
+        <div class="details-row">
+          <span class="details-row-key">Fecha</span>
+          <span class="details-row-val">Miércoles, 25/06/2026</span>
+        </div>
+        <div class="details-row">
+          <span class="details-row-key">Horario</span>
+          <span class="details-row-val">08:00 — 09:00</span>
+        </div>
+        <div class="details-row">
+          <span class="details-row-key">Aula</span>
+          <span class="details-row-val">Aula 3 — Edificio Postgrado, Piso 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-block">
+    <div class="role-inner">
+      <p class="role-eyebrow">Tu rol en el Comité Evaluador</p>
+      <p class="role-name">Tutor Principal</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>
+      Este mensaje fue generado automáticamente por <strong>UPEL Mesa Manager</strong>.<br>
+      Por favor no respondas a este correo.
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

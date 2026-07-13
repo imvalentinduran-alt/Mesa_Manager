@@ -1,0 +1,19 @@
+# ─── Runtime ──────────────────────────────────────────────────────────────────
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+psycopg2-binary>=2.9.10
+pydantic>=2.10.0
+reportlab>=4.2.0
+openpyxl>=3.1.0
+
+# Hashing de contraseñas — bcrypt directo (passlib no es compatible con bcrypt>=4)
+bcrypt>=4.2.0
+
+# Rate limiting
+slowapi==0.1.9
+
+# Tokens JWT — sesiones stateless que sobreviven reinicios del servidor
+PyJWT>=2.9.0
+
+# ─── Build / empaquetado (solo entorno de desarrollo) ─────────────────────────
+pyinstaller>=6.11.0

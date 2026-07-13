@@ -1,0 +1,59 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "UPEL Mesa Manager",
+  "version": "0.1.0",
+  "identifier": "com.upel.mesasdefensa.nube",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "UPEL Mesa Manager",
+        "width": 1280,
+        "height": 768,
+        "minWidth": 1024,
+        "minHeight": 640,
+        "resizable": false,
+        "maximized": true,
+        "fullscreen": false,
+        "decorations": true,
+        "transparent": false,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' https://upel-mesa-api-production.up.railway.app; script-src 'self'; style-src 'self' 'unsafe-inline'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "publisher": "UPEL",
+    "copyright": "© 2026 Universidad Pedagógica Experimental Libertador. Todos los derechos reservados.",
+    "shortDescription": "Sistema de gestión de mesas de defensa para la UPEL.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "nsis": {
+        "languages": ["SpanishInternational"],
+        "installMode": "currentUser",
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "headerImage": "installer/headerImage.bmp",
+        "sidebarImage": "installer/sidebarImage.bmp"
+      }
+    },
+    "android": {
+      "debugApplicationIdSuffix": ".debug"
+    }
+  }
+}

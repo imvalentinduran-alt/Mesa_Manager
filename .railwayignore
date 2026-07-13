@@ -1,0 +1,9 @@
+node_modules/
+src-tauri/
+venv/
+dist/
+build/
+binaries/
+__pycache__/
+*.pyc
+.env

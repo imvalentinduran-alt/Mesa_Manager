@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:#0A0B0E}
+  [data-portal-root]{--bg:#0A0B0E;--card:#121419;--card-2:#16181F;--card-hov:#191C24;--border:rgba(255,255,255,.07);--border-2:rgba(255,255,255,.12);--text:#F2F3F5;--dim:#8A8F98;--mute:#5C616B;--brand-l:#67BAF4;--ok:#3DD68C;--ok-s:rgba(61,214,140,.12);--ok-b:rgba(61,214,140,.22);--info-s:rgba(103,186,244,.12);--info-b:rgba(103,186,244,.22);--err:#F2685C;--err-s:rgba(242,104,92,.12);--err-b:rgba(242,104,92,.24);--gold:#E3B341;--gold-s:rgba(227,179,65,.12);--gold-b:rgba(227,179,65,.28);--field:rgba(255,255,255,.03);--shadow:0 18px 40px -18px rgba(0,0,0,.7);--topbar-bg:rgba(18,20,25,.82);--divider:#33373f;--aura-op:.42;--scrim:rgba(6,7,10,.72);background:#0A0B0E;color:#F2F3F5}
+  [data-portal-root][data-mode="light"]{--bg:#EEF1F6;--card:#FFFFFF;--card-2:#FFFFFF;--card-hov:#F6F8FB;--border:rgba(13,28,54,.09);--border-2:rgba(13,28,54,.16);--text:#10151E;--dim:#515A68;--mute:#6B7480;--brand-l:#1F5F9C;--ok:#0E8F5C;--ok-s:rgba(14,143,92,.15);--ok-b:rgba(14,143,92,.4);--info-s:rgba(31,95,156,.14);--info-b:rgba(31,95,156,.38);--err:#CE3A30;--err-s:rgba(206,58,48,.13);--err-b:rgba(206,58,48,.4);--gold:#8F6500;--gold-s:rgba(143,101,0,.14);--gold-b:rgba(143,101,0,.42);--field:rgba(13,28,54,.04);--shadow:0 16px 36px -20px rgba(20,40,80,.32);--topbar-bg:rgba(255,255,255,.8);--divider:#C8CDD6;--aura-op:.24;--scrim:rgba(20,30,55,.4);background:#EEF1F6;color:#10151E}
+  @keyframes auraFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-70px,60px) scale(1.12)}66%{transform:translate(40px,-30px) scale(.95)}}
+  @keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(103,186,244,.55)}70%{box-shadow:0 0 0 10px rgba(103,186,244,0)}100%{box-shadow:0 0 0 0 rgba(103,186,244,0)}}
+  @keyframes rvIn{from{transform:translateY(18px)}to{transform:none}}
+  @keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes growLine{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</helmet>
+<div data-portal-root="1" data-mode="{{ themeMode }}" style="min-height:100vh;display:flex;flex-direction:column;font-family:'Sora',system-ui,sans-serif">
+
+  <!-- topbar -->
+  <header style="height:72px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid var(--border);background:var(--topbar-bg);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20">
+    <div style="display:flex;align-items:center;gap:13px">
+      <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#0B2138 0%,#1E466B 52%,#2E6CA6 120%);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px -8px rgba(46,108,166,.6);color:#fff">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/><path d="M22 10v6"/></svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:3px;line-height:1">
+        <span style="font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--brand-l)">MESA MANAGER</span>
+        <span style="font-size:15px;font-weight:700;letter-spacing:-.01em">UPEL · Portal del Estudiante</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:11px">
+      <button onClick="{{ toggleTheme }}" style="width:38px;height:38px;border-radius:11px;background:transparent;border:1px solid var(--border);color:var(--dim);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s cubic-bezier(.22,.61,.36,1)" style-hover="border-color:rgba(227,179,65,.5);color:var(--gold)">
+        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ true }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></sc-if>
+        <sc-if value="{{ isLight }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></sc-if>
+      </button>
+      <button style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:11px;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s cubic-bezier(.22,.61,.36,1)" style-hover="background:var(--err-s);color:var(--err);border-color:var(--err-b)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg> Salir
+      </button>
+    </div>
+  </header>
+
+  <div style="flex:1;position:relative;overflow:hidden">
+    <div style="position:absolute;width:560px;height:560px;border-radius:50%;pointer-events:none;filter:blur(80px);opacity:var(--aura-op);z-index:0;background:radial-gradient(circle,var(--brand-l),transparent 68%);top:-200px;right:8%;animation:auraFloat 16s ease-in-out infinite"></div>
+
+    <div style="position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:26px 32px 64px">
+
+      <!-- DEMO switcher -->
+      <sc-if value="{{ showSwitcher }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-bottom:22px;flex-wrap:wrap">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--mute)">VISTA DEMO</span>
+          <div style="display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--field);border:1px solid var(--border);flex-wrap:wrap">
+            <sc-for list="{{ demos }}" as="d" hint-placeholder-count="7">
+              <button onClick="{{ d.onClick }}" style="{{ d.style }}">{{ d.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- CARGANDO -->
+      <sc-if value="{{ isLoading }}">
+        <div>
+          <div style="display:flex;align-items:center;gap:20px">
+            <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(90deg,var(--card) 25%,var(--card-hov) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease infinite;flex-shrink:0"></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+              <div style="width:140px;height:11px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card-hov) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease infinite"></div>
+              <div style="width:280px;height:22px;border-radius:8px;background:linear-gradient(90deg,var(--card) 25%,var(--card-hov) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease infinite"></div>
+              <div style="width:220px;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card-hov) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease infinite"></div>
+            </div>
+          </div>
+          <div style="margin-top:24px;height:78px;border-radius:18px;background:linear-gradient(90deg,var(--card) 25%,var(--card-hov) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease infinite"></div>
+          <div style="margin-top:24px;display:flex;flex-direction:column;gap:14px">
+            <div style="height:120px;border-radius:20px;background:linear-gradient(90deg,var(--card) 25%,var(--card-hov) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease infinite"></div>
+            <div style="height:120px;border-radius:20px;background:linear-gradient(90deg,var(--card) 25%,var(--card-hov) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease infinite"></div>
+          </div>
+          <div style="margin-top:18px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--dim);font-size:13px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.5"/></svg>Cargando tu información…</div>
+        </div>
+      </sc-if>
+
+      <!-- ERROR -->
+      <sc-if value="{{ isError }}">
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:70px 24px">
+          <div style="width:74px;height:74px;border-radius:50%;background:var(--err-s);border:1px solid var(--err-b);color:var(--err);display:flex;align-items:center;justify-content:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+          <h2 style="margin:22px 0 8px;font-size:21px;font-weight:700;letter-spacing:-.01em">No pudimos cargar tu información</h2>
+          <p style="margin:0;font-size:13.5px;color:var(--dim);line-height:1.6;max-width:380px">Ocurrió un problema al consultar el servidor. Verifica tu conexión e inténtalo nuevamente.</p>
+          <button onClick="{{ goReady }}" style="margin-top:24px;display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:14px;border:none;background:linear-gradient(120deg,#1E466B,#2E6CA6);color:#fff;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 12px 28px -10px rgba(46,108,166,.75);transition:all .28s cubic-bezier(.22,.61,.36,1)" style-hover="transform:translateY(-2px);box-shadow:0 18px 38px -10px rgba(46,108,166,.9)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Reintentar
+          </button>
+        </div>
+      </sc-if>
+
+      <!-- CARGADO -->
+      <sc-if value="{{ isReady }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <!-- ficha -->
+          <div style="display:flex;align-items:center;gap:20px;animation:rvIn .55s cubic-bezier(.16,1,.3,1) both">
+            <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#0B2138 0%,#1E466B 52%,#2E6CA6 120%);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 0 0 3px rgba(103,186,244,.18),0 10px 26px -10px rgba(46,108,166,.7)">{{ iniciales }}</div>
+            <div style="min-width:0;flex:1">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--brand-l)">BIENVENIDA DE VUELTA</div>
+              <h2 style="margin:5px 0 5px;font-size:25px;font-weight:700;letter-spacing:-.02em;line-height:1.1">{{ nombre }}</h2>
+              <div style="display:flex;align-items:center;gap:9px;font-size:13px;color:var(--dim);flex-wrap:wrap">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute)"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg> {{ maestria }}
+                <span style="color:var(--divider)">·</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute)"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M6 9h4M6 13h2M14 9h4M14 13h2"/></svg> <span style="font-variant-numeric:tabular-nums">V-21.987.654</span>
+              </div>
+            </div>
+            <div style="margin-left:auto;display:flex;flex-direction:column;gap:9px;padding:14px 18px;border-radius:16px;background:var(--info-s);border:1px solid var(--info-b);min-width:190px;flex-shrink:0">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+                <span style="font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--brand-l)">DEFENSAS APROBADAS</span>
+                <span style="font-size:18px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums">{{ aprobadas }}<span style="font-size:12px;color:var(--dim);font-weight:600">/3</span></span>
+              </div>
+              <div style="height:7px;border-radius:999px;background:var(--field);overflow:hidden">
+                <div style="{{ progresoFill }}"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- titulo de proyecto -->
+          <sc-if value="{{ tieneTitulo }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:16px;padding:14px 18px;border-radius:14px;background:var(--field);border:1px solid var(--border);display:flex;align-items:flex-start;gap:11px;animation:rvIn .55s cubic-bezier(.16,1,.3,1) both;animation-delay:.04s">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute);flex-shrink:0;margin-top:2px"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+              <div style="min-width:0">
+                <div style="font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--mute);margin-bottom:3px">PROYECTO DE INVESTIGACIÓN</div>
+                <p style="margin:0;font-size:14px;font-style:italic;color:var(--text);line-height:1.5;text-wrap:pretty">«{{ titulo }}»</p>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- BANNER SOLVENCIA -->
+          <div style="{{ bannerStyle }}">
+            <div style="{{ bannerIconStyle }}">
+              <sc-if value="{{ bannerOk }}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg></sc-if>
+              <sc-if value="{{ bannerWarn }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg></sc-if>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <span style="{{ bannerTagStyle }}">{{ bannerTag }}</span>
+                <sc-if value="{{ tieneMonto }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:var(--field);border:1px solid var(--border);color:var(--dim);font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ bannerMonto }}</span></sc-if>
+              </div>
+              <div style="margin-top:6px;font-size:15px;font-weight:700;color:var(--text)">{{ bannerTitulo }}</div>
+              <p style="margin:4px 0 0;font-size:13px;color:var(--dim);line-height:1.55;text-wrap:pretty">{{ bannerDesc }}</p>
+            </div>
+          </div>
+
+          <!-- SECCION RECORRIDO -->
+          <div style="display:flex;align-items:center;gap:13px;margin:34px 0 20px">
+            <div style="width:34px;height:34px;border-radius:11px;background:var(--info-s);border:1px solid var(--info-b);color:var(--brand-l);display:flex;align-items:center;justify-content:center;transition:all .3s cubic-bezier(.22,.61,.36,1)" style-hover="background:linear-gradient(120deg,#1E466B,#2E6CA6);color:#fff;border-color:transparent;transform:rotate(-6deg) scale(1.05)">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div style="line-height:1.15">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--mute)">TU PROGRESO</div>
+              <div style="font-size:15.5px;font-weight:700">Recorrido de defensas</div>
+            </div>
+          </div>
+
+          <!-- STEPPER -->
+          <div>
+            <sc-for list="{{ nodos }}" as="m" hint-placeholder-count="3">
+              <div style="{{ m.rowStyle }}">
+                <!-- rail -->
+                <div style="display:flex;flex-direction:column;align-items:center;width:48px;flex-shrink:0">
+                  <div style="{{ m.badgeStyle }}">
+                    <sc-if value="{{ m.isCompletado }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></sc-if>
+                    <sc-if value="{{ m.isProgramado }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></sc-if>
+                    <sc-if value="{{ m.isCorreccion }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></sc-if>
+                    <sc-if value="{{ m.isReprobado }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></sc-if>
+                    <sc-if value="{{ m.isSuspendido }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></sc-if>
+                    <sc-if value="{{ m.isBloqueado }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></sc-if>
+                    <sc-if value="{{ m.isPendiente }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></sc-if>
+                  </div>
+                  <sc-if value="{{ m.notLast }}" hint-placeholder-val="{{ true }}">
+                    <div style="{{ m.connStyle }}"></div>
+                  </sc-if>
+                </div>
+
+                <!-- card -->
+                <div style="{{ m.cardStyle }}">
+                  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                    <span style="font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--mute)">{{ m.label }}</span>
+                    <span style="{{ m.pillStyle }}"><span style="{{ m.pillDot }}"></span>{{ m.estadoLabel }}</span>
+                  </div>
+
+                  <!-- PROGRAMADO -->
+                  <sc-if value="{{ m.isProgramado }}">
+                    <div>
+                      <div style="margin-top:13px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+                        <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--text)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand-l)"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>{{ m.fecha }}</span>
+                        <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--dim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute)"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{ m.hora }}</span>
+                        <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--dim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute)"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>{{ m.aula }}</span>
+                      </div>
+                      <sc-if value="{{ m.expandable }}">
+                        <div>
+                          <button onClick="{{ m.toggleExpand }}" style="{{ m.expandBtnStyle }}">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-12 0"/><circle cx="12" cy="11" r="4"/></svg>
+                            {{ m.expandLabel }}
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ m.chevronStyle }}"><path d="m6 9 6 6 6-6"/></svg>
+                          </button>
+                          <sc-if value="{{ m.expanded }}">
+                            <div style="margin-top:14px;padding-top:16px;border-top:1px solid var(--border);animation:rvIn .35s ease both">
+                              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);margin-bottom:13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute)"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>Programa · <strong style="color:var(--text);font-weight:600">{{ m.programa }}</strong></div>
+                              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                                <sc-for list="{{ m.comite }}" as="c" hint-placeholder-count="6">
+                                  <div style="display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;background:var(--field);border:1px solid var(--border)">
+                                    <div style="width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#3a3f49,#23262d)">{{ c.ini }}</div>
+                                    <div style="min-width:0">
+                                      <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.nombre }}</div>
+                                      <div style="font-size:10.5px;color:var(--mute);font-weight:600;letter-spacing:.04em;margin-top:1px">{{ c.rol }}</div>
+                                    </div>
+                                  </div>
+                                </sc-for>
+                              </div>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-if>
+
+                  <!-- EN CORRECCION -->
+                  <sc-if value="{{ m.isCorreccion }}">
+                    <div style="margin-top:13px">
+                      <p style="margin:0;font-size:13.5px;color:var(--dim);line-height:1.55">Aprobada con correcciones. Debes consignar tu versión corregida dentro del plazo establecido.</p>
+                      <div style="{{ m.plazoStyle }}">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{ m.plazoLabel }}
+                      </div>
+                    </div>
+                  </sc-if>
+
+                  <!-- COMPLETADO -->
+                  <sc-if value="{{ m.isCompletado }}">
+                    <div style="margin-top:13px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                      <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--dim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute)"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Defendida el {{ m.fecha }}</span>
+                      <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;background:var(--ok-s);border:1px solid var(--ok-b);color:var(--ok);font-size:12.5px;font-weight:700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{{ m.veredicto }}</span>
+                    </div>
+                  </sc-if>
+
+                  <!-- REPROBADO / SUSPENDIDO -->
+                  <sc-if value="{{ m.isNegativo }}">
+                    <div style="margin-top:13px">
+                      <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--dim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--mute)"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>{{ m.fecha }}</span>
+                      <p style="margin:9px 0 0;font-size:13px;color:var(--dim);line-height:1.55">{{ m.negativoDesc }}</p>
+                    </div>
+                  </sc-if>
+
+                  <!-- BLOQUEADO -->
+                  <sc-if value="{{ m.isBloqueado }}">
+                    <p style="margin:12px 0 0;font-size:13px;color:var(--mute);line-height:1.5">{{ m.bloqueadoDesc }}</p>
+                  </sc-if>
+
+                  <!-- PENDIENTE -->
+                  <sc-if value="{{ m.isPendiente }}">
+                    <p style="margin:12px 0 0;font-size:13px;color:var(--dim);line-height:1.5">Disponible para programar. Coordina tu fecha de defensa con tu tutor.</p>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;escenarioInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;inicio&quot;,&quot;encurso&quot;,&quot;correccion&quot;,&quot;suspendida&quot;,&quot;graduado&quot;],&quot;default&quot;:&quot;encurso&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mostrarSwitcher&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  DATOS = {
+    nombre:'Ana Sofía Rivas Torrealba',
+    maestria:'Maestría en Informática Educativa',
+    titulo:'Implementación de plataformas e-learning en educación media rural venezolana',
+  };
+  TIPO_LABEL = ['','Mesa I','Mesa II','Mesa III'];
+  DET = {
+    1:{fecha:'10/03/2026',hora:'09:00 – 11:00',aula:'Sala de Postgrado A',veredicto:'Aprobado',monto:'Bs. 1.200'},
+    2:{fecha:'20/06/2026',hora:'14:00 – 16:00',aula:'Aula 3 – Edificio Rectorado',monto:'Bs. 1.200'},
+    3:{fecha:'15/09/2026',hora:'10:00 – 12:00',aula:'Sala de Postgrado A',monto:'Bs. 1.500'},
+  };
+  PROGRAMA = 'Informática Educativa';
+  COMITE = [
+    {rol:'Tutor · Principal',  nombre:'Prof. Hernán Quintero'},
+    {rol:'Tutor · Suplente',   nombre:'Prof. Gabriela Ríos'},
+    {rol:'Jurado 1 · Principal',nombre:'Prof. Carlos Mendoza'},
+    {rol:'Jurado 1 · Suplente', nombre:'Prof. Luisa Fontaine'},
+    {rol:'Jurado 2 · Principal',nombre:'Prof. Rosa Marcano'},
+    {rol:'Jurado 2 · Suplente', nombre:'Prof. Andrés Belmonte'},
+  ];
+  SCEN = {
+    inicio:    {mesas:[], prox:1, pago:false},
+    encurso:   {mesas:[{tipo_mesa:1,estado:'Aprobada'},{tipo_mesa:2,estado:'Programada'}], prox:2, pago:true},
+    correccion:{mesas:[{tipo_mesa:1,estado:'Aprobada'},{tipo_mesa:2,estado:'Con_Correcciones',limite:'20/06/2026'}], prox:2, pago:false},
+    suspendida:{mesas:[{tipo_mesa:1,estado:'Aprobada'},{tipo_mesa:2,estado:'Suspendida'}], prox:2, pago:false},
+    graduado:  {mesas:[{tipo_mesa:1,estado:'Aprobada'},{tipo_mesa:2,estado:'Aprobada'},{tipo_mesa:3,estado:'Aprobada'}], prox:null, pago:true},
+  };
+  DEMOS = [
+    {id:'inicio',label:'Inicio'},
+    {id:'encurso',label:'En curso'},
+    {id:'correccion',label:'Corrección'},
+    {id:'suspendida',label:'Suspendida'},
+    {id:'graduado',label:'Graduado'},
+    {id:'loading',label:'Cargando'},
+    {id:'error',label:'Error'},
+  ];
+  COL = {
+    ok:{c:'var(--ok)',s:'var(--ok-s)',b:'var(--ok-b)'},
+    gold:{c:'var(--gold)',s:'var(--gold-s)',b:'var(--gold-b)'},
+    err:{c:'var(--err)',s:'var(--err-s)',b:'var(--err-b)'},
+    info:{c:'var(--brand-l)',s:'var(--info-s)',b:'var(--info-b)'},
+    mute:{c:'var(--mute)',s:'var(--field)',b:'var(--border)'},
+    dim:{c:'var(--dim)',s:'var(--field)',b:'var(--border)'},
+  };
+
+  state = {
+    theme: this.props.theme ?? 'dark',
+    view: this.props.escenarioInicial ?? 'encurso',
+    expanded: {2:true},
+  };
+
+  ini(n){ const w=n.replace(/^Prof\.\s*/,'').trim().split(/\s+/); return ((w[0]||'')[0]||'')+((w[1]||'')[0]||''); }
+
+  diasRestantes(s){
+    if(!s) return null;
+    const [d,m,y]=s.split('/').map(Number);
+    const limite=new Date(y,m-1,d);
+    const hoy=new Date(); hoy.setHours(0,0,0,0);
+    return Math.ceil((limite-hoy)/(1000*60*60*24));
+  }
+
+  getEstadoNodo(tipo, mesas){
+    if(tipo>1){
+      const ant=mesas.find(x=>x.tipo_mesa===tipo-1);
+      if(!ant || ant.estado!=='Aprobada') return {tipo:'bloqueado'};
+    }
+    const mesa=mesas.find(x=>x.tipo_mesa===tipo);
+    if(!mesa) return {tipo:'pendiente'};
+    switch(mesa.estado){
+      case 'Programada': case 'En_Curso': return {tipo:'programado',mesa};
+      case 'Con_Correcciones': return {tipo:'enCorreccion',mesa};
+      case 'Aprobada': return {tipo:'completado',mesa};
+      case 'Reprobada': return {tipo:'reprobado',mesa};
+      case 'Suspendida': return {tipo:'suspendido',mesa};
+      default: return {tipo:'pendiente'};
+    }
+  }
+
+  seg(v){
+    const on=this.state.view===v;
+    return {display:'flex',alignItems:'center',gap:'6px',padding:'7px 13px',borderRadius:'9px',border:'none',fontFamily:"'Sora',system-ui,sans-serif",fontSize:'12px',fontWeight:600,cursor:'pointer',transition:'all .25s',whiteSpace:'nowrap',
+      ...(on?{background:'linear-gradient(120deg,#1E466B,#2E6CA6)',color:'#fff',boxShadow:'0 6px 14px -6px rgba(46,108,166,.6)'}:{background:'transparent',color:'var(--dim)'})};
+  }
+
+  buildNodo(tipo, mesas){
+    const est=this.getEstadoNodo(tipo, mesas);
+    const t=est.tipo;
+    const mesa=est.mesa;
+    const det=this.DET[tipo]||{};
+    const colKey = t==='completado'?'ok' : t==='programado'?'info' : t==='enCorreccion'?'gold' : (t==='reprobado'||t==='suspendido')?'err' : t==='pendiente'?'dim' : 'mute';
+    const col=this.COL[colKey];
+    const enCurso = mesa && mesa.estado==='En_Curso';
+    const expandable = mesa && mesa.estado==='Programada';
+    const expanded = !!this.state.expanded[tipo];
+    const superado = !!(mesa && mesa.estado==='Aprobada');
+
+    const labels = {programado:enCurso?'En curso':'Programada', enCorreccion:'Con correcciones', completado:'Aprobada', reprobado:'Reprobada', suspendido:'Suspendida', bloqueado:'Bloqueada', pendiente:'Por programar'};
+    const dim = (t==='bloqueado');
+
+    const node = {
+      tipo:t, label:this.TIPO_LABEL[tipo], notLast: tipo<3,
+      isCompletado:t==='completado', isProgramado:t==='programado', isCorreccion:t==='enCorreccion',
+      isReprobado:t==='reprobado', isSuspendido:t==='suspendido', isBloqueado:t==='bloqueado', isPendiente:t==='pendiente',
+      isNegativo: t==='reprobado'||t==='suspendido',
+      estadoLabel: labels[t],
+      fecha:det.fecha, hora:det.hora, aula:det.aula, veredicto:det.veredicto||'Aprobado',
+      programa:this.PROGRAMA, comite:this.COMITE.map(c=>({...c, ini:this.ini(c.nombre)})),
+      expandable, expanded, toggleExpand:()=>this.setState(s=>({expanded:{...s.expanded,[tipo]:!s.expanded[tipo]}})),
+      expandLabel: expanded?'Ocultar comité':'Ver comité completo',
+      bloqueadoDesc:'Se desbloquea al aprobar '+(this.TIPO_LABEL[tipo-1]||'la mesa anterior')+'.',
+      negativoDesc: t==='suspendido'?'La defensa fue suspendida. Comunícate con coordinación para los siguientes pasos.':'La defensa no aprobó. Comunícate con coordinación para reprogramar.',
+
+      rowStyle:{display:'flex',gap:'16px',animation:'rvIn .5s cubic-bezier(.16,1,.3,1) both',animationDelay:(0.06*tipo)+'s'},
+      badgeStyle:{width:'46px',height:'46px',borderRadius:'50%',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:col.s,border:'1.5px solid '+col.b,color:col.c,boxShadow: t==='completado'?'0 0 0 3px var(--ok-s)':'none',transition:'all .3s',opacity:dim?0.75:1},
+      connStyle:{flex:'1 1 auto',width:'3px',minHeight:'34px',margin:'6px 0',borderRadius:'999px',background: superado?'linear-gradient(180deg,#1E8A5B,#3DD68C)':'var(--border-2)',transformOrigin:'top',animation:'growLine .5s ease both',animationDelay:(0.06*tipo+0.1)+'s'},
+      cardStyle:{flex:1,minWidth:0,background: dim?'var(--card-2)':'var(--card)',border:'1px solid '+(t==='programado'||t==='enCorreccion'?col.b:'var(--border)'),borderStyle:(dim||t==='pendiente')?'dashed':'solid',borderRadius:'20px',padding:'18px 22px',marginBottom: tipo<3?'14px':'0',transition:'all .3s cubic-bezier(.22,.61,.36,1)',boxShadow:(t==='programado'||t==='enCorreccion')?'0 16px 38px -22px rgba(46,108,166,.5)':'none',opacity:dim?0.82:1},
+      pillStyle:{display:'inline-flex',alignItems:'center',gap:'7px',padding:'4px 11px',borderRadius:'999px',background:col.s,border:'1px solid '+col.b,color:col.c,fontSize:'11px',fontWeight:700,letterSpacing:'.04em'},
+      pillDot:{width:'6px',height:'6px',borderRadius:'50%',background:col.c, ...(enCurso?{animation:'livePulse 1.8s ease-out infinite'}:{})},
+      chevronStyle:{transition:'transform .25s', transform: expanded?'rotate(180deg)':'none'},
+      expandBtnStyle:{marginTop:'14px',display:'inline-flex',alignItems:'center',gap:'8px',padding:'9px 14px',borderRadius:'11px',background:'var(--field)',border:'1px solid var(--border)',color:'var(--dim)',fontFamily:"'Sora',system-ui,sans-serif",fontSize:'12.5px',fontWeight:600,cursor:'pointer',transition:'all .2s'},
+    };
+
+    // plazo (en correccion)
+    if(t==='enCorreccion'){
+      const dias=this.diasRestantes(mesa.limite);
+      const vencido = dias!=null && dias<0;
+      const urgente = dias!=null && dias>=0 && dias<=3;
+      const pcol = (vencido||urgente)?this.COL.err:this.COL.gold;
+      node.plazoLabel = vencido ? ('Plazo vencido el '+mesa.limite) : (dias===0?('Vence hoy · '+mesa.limite):('Quedan '+dias+' día'+(dias===1?'':'s')+' · vence '+mesa.limite));
+      node.plazoStyle = {marginTop:'12px',display:'inline-flex',alignItems:'center',gap:'8px',padding:'9px 14px',borderRadius:'11px',background:pcol.s,border:'1px solid '+pcol.b,color:pcol.c,fontSize:'12.5px',fontWeight:700};
+    }
+    return node;
+  }
+
+  renderVals(){
+    const st=this.state;
+    const showSwitcher = this.props.mostrarSwitcher ?? true;
+    const isLoading = st.view==='loading';
+    const isError = st.view==='error';
+    const sc = this.SCEN[st.view];
+    const isReady = !!sc;
+
+    const demos = this.DEMOS.map(d=>({id:d.id, label:d.label, style:this.seg(d.id), onClick:()=>this.setState({view:d.id})}));
+
+    let out = {
+      themeMode:st.theme, isDark:st.theme==='dark', isLight:st.theme==='light',
+      toggleTheme:()=>this.setState(s=>({theme:s.theme==='dark'?'light':'dark'})),
+      showSwitcher, demos,
+      isLoading, isError, isReady, goReady:()=>this.setState({view:'encurso'}),
+    };
+
+    if(!sc) return out;
+
+    const mesas = sc.mesas;
+    const aprobadas = mesas.filter(m=>m.estado==='Aprobada').length;
+    const nodos = [1,2,3].map(t=>this.buildNodo(t, mesas));
+
+    // banner
+    let bannerKey, bannerTag, bannerTitulo, bannerDesc, bannerMonto='', tieneMonto=false;
+    if(sc.prox===null){
+      bannerKey='ok'; bannerTag='SOLVENCIA TOTAL';
+      bannerTitulo='Todas tus mesas están verificadas';
+      bannerDesc='Completaste el pago y la verificación de las tres defensas. No tienes pendientes administrativos. ¡Felicidades!';
+    } else {
+      const prox=this.TIPO_LABEL[sc.prox];
+      const det=this.DET[sc.prox]||{};
+      bannerMonto=det.monto||''; tieneMonto=!!det.monto;
+      if(sc.pago){
+        bannerKey='ok'; bannerTag='SOLVENTE';
+        bannerTitulo='Pago verificado para '+prox;
+        bannerDesc='Tu pago está confirmado. Estás habilitado para presentar tu próxima defensa.';
+      } else {
+        bannerKey='gold'; bannerTag='PAGO PENDIENTE';
+        bannerTitulo='Aún no verificamos tu pago para '+prox;
+        bannerDesc='Para habilitar tu próxima defensa, contacta a coordinación y regulariza tu solvencia antes de la fecha.';
+      }
+    }
+    const bcol=this.COL[bannerKey];
+
+    return {
+      ...out,
+      iniciales:this.ini(this.DATOS.nombre), nombre:this.DATOS.nombre, maestria:this.DATOS.maestria,
+      titulo:this.DATOS.titulo, tieneTitulo:!!this.DATOS.titulo,
+      aprobadas:String(aprobadas),
+      progresoFill:{height:'100%',width:Math.round(aprobadas/3*100)+'%',borderRadius:'999px',background:'linear-gradient(90deg,#1E8A5B,#3DD68C)',transition:'width .6s cubic-bezier(.16,1,.3,1)'},
+
+      bannerOk:bannerKey==='ok', bannerWarn:bannerKey==='gold',
+      bannerTag, bannerTitulo, bannerDesc, bannerMonto, tieneMonto,
+      bannerStyle:{marginTop:'20px',display:'flex',alignItems:'flex-start',gap:'15px',padding:'18px 22px',borderRadius:'18px',background:bcol.s,border:'1px solid '+bcol.b,animation:'rvIn .55s cubic-bezier(.16,1,.3,1) both',animationDelay:'.08s'},
+      bannerIconStyle:{width:'44px',height:'44px',borderRadius:'12px',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:'var(--card)',border:'1px solid '+bcol.b,color:bcol.c},
+      bannerTagStyle:{display:'inline-flex',alignItems:'center',padding:'4px 11px',borderRadius:'999px',background:'var(--card)',border:'1px solid '+bcol.b,color:bcol.c,fontSize:'10px',fontWeight:700,letterSpacing:'.14em'},
+
+      nodos,
+    };
+  }
+}
+</script>
+</body>
+</html>
