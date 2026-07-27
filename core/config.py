@@ -12,7 +12,6 @@ DB_CONFIG: dict = {
     "user":     os.environ["DB_USER"],
     "password": os.environ["DB_PASSWORD"],
     "database": os.environ["DB_NAME"],
-    "options":  "-c lc_messages=C",
     "sslmode":  "verify-full" if _SSL_CERT else "require",
     **({"sslrootcert": _SSL_CERT} if _SSL_CERT else {}),
 }
