@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "UPEL Mesa Manager",
   "version": "0.1.0",
-  "identifier": "com.upel.mesasdefensa.nube",
+  "identifier": "com.upel.mesasdefensa.nube", 
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
@@ -26,7 +26,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'; connect-src 'self' https://upel-mesa-api-production.up.railway.app; script-src 'self'; style-src 'self' 'unsafe-inline'"
+      "csp": "default-src 'self'; connect-src 'self' https://web-production-acce5.up.railway.app; script-src 'self'; style-src 'self' 'unsafe-inline'"
     }
   },
   "bundle": {

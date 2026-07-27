@@ -304,7 +304,7 @@ def crear_base_de_datos() -> None:
 
 def inicializar_tablas() -> None:
     """Crea tablas e inserta seeds. Llamada al arrancar la API."""
-    config = {**BASE_CONFIG, "database": DB_NAME, "options": "-c lc_messages=C"}
+    config = {**BASE_CONFIG, "database": DB_NAME}
     try:
         conn = psycopg2.connect(**config)
         cursor = conn.cursor()
@@ -326,7 +326,7 @@ def inicializar_tablas() -> None:
 
 def limpiar_y_recrear() -> None:
     """Elimina todas las tablas y las recrea desde cero. Solo para desarrollo."""
-    config = {**BASE_CONFIG, "database": DB_NAME, "options": "-c lc_messages=C"}
+    config = {**BASE_CONFIG, "database": DB_NAME}
     try:
         conn = psycopg2.connect(**config)
         cursor = conn.cursor()

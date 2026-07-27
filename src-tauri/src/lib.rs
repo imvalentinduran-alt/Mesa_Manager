@@ -1,6 +1,6 @@
 use tauri::Manager;
 
-const API_URL: &str = "https://upel-mesa-api-production.up.railway.app";
+const API_URL: &str = "https://web-production-acce5.up.railway.app";
 
 #[tauri::command]
 async fn check_api_health() -> bool {
